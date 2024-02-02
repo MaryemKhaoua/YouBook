@@ -72,7 +72,7 @@ class BookController extends Controller
     {
       $request->validate([
         'title' => 'required|max:255',
-        'body' => 'required',
+        'description' => 'required',
       ]);
       $book = Book::find($id);
       $book->update($request->all());
