@@ -50,11 +50,12 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-    }
+        $book = Book::find($id);
 
+        return view('books.show', compact('book'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -89,5 +90,22 @@ class BookController extends Controller
       $book->delete();
       return redirect()->route('books.index')
         ->with('success', 'book deleted successfully');
+    }
+
+    public function reserve($id)
+    {
+    $book = Book::find($id);
+
+    if ($book) {
+        if ($book->is_reserved) {
+            return redirect()->route('books.show', $id)->with('error', 'Book is already reserved.');
+        }
+
+        $book->update(['is_reserved' => true]);
+
+        return redirect()->route('books.show', $id)->with('success', 'Book reserved successfully.');
+    }
+
+    return redirect()->route('books.index')->with('error', 'Book not found.');
     }
 }
