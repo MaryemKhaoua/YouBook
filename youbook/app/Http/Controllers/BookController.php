@@ -89,23 +89,23 @@ class BookController extends Controller
       $book = Book::find($id);
       $book->delete();
       return redirect()->route('books.index')
-        ->with('success', 'book deleted successfully');
+        ->with('success', 'book deleted successfullyyy');
     }
 
     public function reserve($id)
     {
-    $book = Book::find($id);
-
-    if ($book) {
-        if ($book->is_reserved) {
-            return redirect()->route('books.show', $id)->with('error', 'Book is already reserved.');
+        $book = Book::find($id);
+    
+        if (!$book) {
+            return redirect()->route('books.index')->with('error', 'book makinsh hh');
         }
-
+    
+        if ($book->is_reserved) {
+            return redirect()->route('books.show', $id)->with('error', 'book deja reserved ');
+        }
+    
         $book->update(['is_reserved' => true]);
-
-        return redirect()->route('books.show', $id)->with('success', 'Book reserved successfully.');
-    }
-
-    return redirect()->route('books.index')->with('error', 'Book not found.');
-    }
+    
+        return redirect()->route('books.show', $id)->with('success', 'book reserved binajaa7!!!');
+    }    
 }
